@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { WishlistProvider} from "./context/WishlistContext";
+import Header from "./components/layout/header";
+import Footer from "./components/layout/footer";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,8 +31,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      > 
+      <WishlistProvider>
+        <Header />
         {children}
+        <Footer />
+        </WishlistProvider >
       </body>
     </html>
   );
