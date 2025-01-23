@@ -15,11 +15,20 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+// Define the Car type based on your data structure
+type Car = {
+  id: string;
+  name: string;
+  slug: {
+    current: string;
+  };
+};
+
 const Header = () => {
   const { wishlist } = useWishlist(); // Get wishlist data
   const [searchQuery, setSearchQuery] = useState<string>(""); // Search query state
-  const [cars, setCars] = useState<any[]>([]); // All cars state
-  const [filteredCars, setFilteredCars] = useState<any[]>([]); // Filtered cars state
+  const [cars, setCars] = useState<Car[]>([]); // All cars state with proper typing
+  const [filteredCars, setFilteredCars] = useState<Car[]>([]); // Filtered cars state with proper typing
 
   const router = useRouter(); // For navigation
 
@@ -36,7 +45,7 @@ const Header = () => {
 
   // Filter cars based on the query
   useEffect(() => {
-    const filtered = cars.filter((car: any) =>
+    const filtered = cars.filter((car) =>
       car.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredCars(filtered); // Update filtered results
@@ -53,6 +62,12 @@ const Header = () => {
     setSearchQuery(''); // Clear search query after selection
   };
 
+  // Function to close the sheet when clicking on a link inside the sheet
+  const closeSheet = () => {
+    const sheet = document.querySelector('[data-state="open"]') as HTMLElement;
+    sheet?.click(); // This simulates the closing of the sheet by clicking the open state trigger
+  };
+
   return (
     <header className="flex flex-col md:flex-row items-center justify-between px-4 h-auto md:h-[60px] shadow-md bg-white">
       {/* Logo */}
@@ -66,7 +81,7 @@ const Header = () => {
             <div className="relative flex items-center justify-center bg-white border border-gray-300 rounded-full h-8 w-8">
               <Image src="/images/heart.png" alt="Heart" height={20} width={20} />
               {wishlist.length > 0 && (
-                <span className="absolute top-0 right-0 text-xs text-gray-100 bg-red-600 rounded-lg h-3 w-3">
+                <span className="absolute top-0 right-0 flex items-center justify-center text-xs text-gray-100 bg-red-600 rounded-full h-5 w-5">
                   {wishlist.length}
                 </span>
               )}
@@ -96,7 +111,7 @@ const Header = () => {
           <Image src="/images/filter.png" alt="Filter" height={100} width={100} className="w-4 h-4" />
           {filteredCars.length > 0 && searchQuery && (
             <ul className="absolute top-full left-0 right-0 bg-white border border-gray-300 max-h-48 overflow-y-auto z-10">
-              {filteredCars.map((car: any) => (
+              {filteredCars.map((car) => (
                 <li
                   key={car.id}
                   onClick={() => handleCarClick(car.slug.current)}
@@ -117,9 +132,16 @@ const Header = () => {
           <SheetContent className="bg-white w-[90%] max-w-xs">
             <h1 className="text-blue-600 font-bold ml-4">RENTAL CAR WEBSITE</h1>
             <div className="flex-col text-blue-600">
-            <p className="mt-4 font-semibold"><Link href='/'>Home page</Link></p>
-           <p className="mt-4 font-semibold"> <Link href='/lastpage'>Rental Details</Link></p>
-           <p className="mt-4 font-semibold"> <Link href='/payment'>Booking Details</Link></p></div>
+              <p className="mt-4 font-semibold">
+                <Link href="/" onClick={closeSheet}>Home page</Link>
+              </p>
+              <p className="mt-4 font-semibold">
+                <Link href="/lastpage" onClick={closeSheet}>Rental Details</Link>
+              </p>
+              <p className="mt-4 font-semibold">
+                <Link href="/payment" onClick={closeSheet}>Booking Details</Link>
+              </p>
+            </div>
 
             <SheetHeader>
               <SheetTitle></SheetTitle>
@@ -142,7 +164,7 @@ const Header = () => {
         <Image src="/images/filter.png" alt="Filter" height={100} width={100} className="w-5 h-5" />
         {filteredCars.length > 0 && searchQuery && (
           <ul className="absolute top-full left-0 right-0 bg-white border border-gray-300 max-h-48 overflow-y-auto z-10">
-            {filteredCars.map((car: any) => (
+            {filteredCars.map((car) => (
               <li
                 key={car.id}
                 onClick={() => handleCarClick(car.slug.current)}
@@ -161,7 +183,7 @@ const Header = () => {
           <div className="relative flex items-center justify-center bg-white border border-gray-300 rounded-full h-8 w-8">
             <Image src="/images/heart.png" alt="Heart" height={20} width={20} />
             {wishlist.length > 0 && (
-              <span className="absolute top-0 right-0 text-xs text-gray-100 bg-red-600 rounded-lg h-3 w-3">
+              <span className="absolute top-0 right-0 flex items-center justify-center text-xs text-gray-100 bg-red-600 rounded-full h-5 w-5">
                 {wishlist.length}
               </span>
             )}

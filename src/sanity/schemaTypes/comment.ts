@@ -1,5 +1,5 @@
-// In your Sanity schema for comments (e.g., comment.js or comment.ts)
-export default {
+
+ const  commentsSchema ={
     name: 'comment',
     title: 'Comment',
     type: 'document',
@@ -21,3 +21,4 @@ export default {
       },
     ],
   };
+  export default commentsSchema;

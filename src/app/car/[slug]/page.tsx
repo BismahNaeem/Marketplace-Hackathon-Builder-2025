@@ -98,7 +98,7 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
               <span className="text-gray-600">440+ reviewers</span>
             </div>
             <p className="text-gray-600 mb-6">
-              Nismo has become the embodiment of Nissan's outstanding performance inspired by the most unforgiving
+              Nismo has become the embodiment of Nissan outstanding performance inspired by the most unforgiving
               proving ground: the racetrack.
             </p>
             <div className="space-y-2">

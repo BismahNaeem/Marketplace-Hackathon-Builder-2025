@@ -5,6 +5,7 @@ import Link from 'next/link'; // Import Link from next/link
 import { useWishlist } from '@/app/context/WishlistContext';
 import { FaHeart } from 'react-icons/fa' // Import the useWishlist hook for managing the wishlist
 import Herosection from "./components/herosection"
+import Image from 'next/image';
 
 // Define the car interface (type)
 interface Car {
@@ -76,9 +77,10 @@ const Home = () => {
             {/* Car Name and Image */}
             <div className="flex flex-col items-start w-full mb-4">
               <h2 className="text-xl font-semibold">{car.name}</h2>
-              <img
+              <Image
                 src={car.imageUrl}
                 alt={car.name}
+                height={500}width={500}
                 className="w-full h-48 object-contain rounded-lg"
               />
             </div>
@@ -88,15 +90,15 @@ const Home = () => {
               {/* Fuel Capacity, Transmission, and Seats aligned horizontally (on x-axis) */}
               <div className="flex space-x-4">
                 <div className="flex items-center">
-                  <img src="/images/img1.png" alt="Fuel Capacity" className="w-5 h-5 mr-2" />
+                  <Image src="/images/img1.png" alt="Fuel Capacity"height={500}width={500} className="w-5 h-5 mr-2" />
                   <p>{car.fuelCapacity}L</p>
                 </div>
                 <div className="flex items-center">
-                  <img src="/images/img2.png" alt="Transmission" className="w-5 h-5 mr-2" />
+                  <Image src="/images/img2.png" alt="Transmission" height={500}width={500} className="w-5 h-5 mr-2" />
                   <p>{car.transmission}</p>
                 </div>
                 <div className="flex items-center">
-                  <img src="/images/img3.png" alt="Seating Capacity" className="w-5 h-5 mr-2" />
+                  <Image src="/images/img3.png" alt="Seating Capacity" height={500}width={500} className="w-5 h-5 mr-2" />
                   <p>{car.seatingCapacity}</p>
                 </div>
               </div>

@@ -4,11 +4,20 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // For navigation
 import { fetchCars } from "@/sanity/lib/query"; // Import fetchCars
 
+// Define the car type
+interface Car {
+  id: string;
+  name: string;
+  slug: {
+    current: string;
+  };
+}
+
 const SearchFilter = () => {
-  const [cars, setCars] = useState([]); // Store all cars
-  const [filteredCars, setFilteredCars] = useState([]); // Filtered results
-  const [searchTerm, setSearchTerm] = useState(""); // Search input value
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false); // Track search bar visibility
+  const [cars, setCars] = useState<Car[]>([]); // Store all cars
+  const [filteredCars, setFilteredCars] = useState<Car[]>([]); // Filtered results
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Search input value
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState<boolean>(false); // Track search bar visibility
 
   const router = useRouter(); // For navigation
 
@@ -29,7 +38,7 @@ const SearchFilter = () => {
     setSearchTerm(term);
 
     // Filter cars based on name
-    const filtered = cars.filter((car: any) =>
+    const filtered = cars.filter((car) =>
       car.name.toLowerCase().includes(term)
     );
     setFilteredCars(filtered); // Update filtered results
@@ -83,7 +92,7 @@ const SearchFilter = () => {
 
           {/* Display Filtered Results */}
           <ul className="mt-4">
-            {filteredCars.map((car: any) => (
+            {filteredCars.map((car) => (
               <li
                 key={car.id}
                 onClick={() => handleCarClick(car.slug.current)} // Navigate on click
