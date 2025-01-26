@@ -28,7 +28,7 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     const getCars = async () => {
       setLoading(true);
-      setError(null);
+      setError(null);  // Reset error state before fetching
       try {
         const fetchedCars: Car[] = await fetchCars();
         setCars(fetchedCars);
@@ -54,7 +54,7 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div>{error}</div>; // Display the error message if there is an error
   }
 
   if (!carDetails) {
