@@ -23,12 +23,10 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
   const [cars, setCars] = useState<Car[]>([]);
   const [carDetails, setCarDetails] = useState<Car | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getCars = async () => {
       setLoading(true);
-      setError(null);  // Reset error state before fetching
       try {
         const fetchedCars: Car[] = await fetchCars();
         setCars(fetchedCars);
@@ -36,11 +34,10 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
         const carDetails = fetchedCars.find((car) => car.slug.current === params.slug);
         if (carDetails) {
           setCarDetails(carDetails);
-        } else {
-          setError("Car not found");
         }
-      } catch (err) {
-        setError("Failed to fetch cars");
+      } catch {
+        // In case of error, we can handle it with a generic loading state or fallback UI
+        setCarDetails(null);
       } finally {
         setLoading(false);
       }
@@ -51,10 +48,6 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>; // Display the error message if there is an error
   }
 
   if (!carDetails) {
