@@ -29,6 +29,7 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState<string>(""); // Search query state
   const [cars, setCars] = useState<Car[]>([]); // All cars state with proper typing
   const [filteredCars, setFilteredCars] = useState<Car[]>([]); // Filtered cars state with proper typing
+  const [noResultsFound, setNoResultsFound] = useState<boolean>(false); // State to track no result found
 
   const router = useRouter(); // For navigation
 
@@ -45,10 +46,18 @@ const Header = () => {
 
   // Filter cars based on the query
   useEffect(() => {
-    const filtered = cars.filter((car) =>
-      car.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredCars(filtered); // Update filtered results
+    if (searchQuery.trim() === "") {
+      setFilteredCars(cars); // If search query is empty, show all cars
+      setNoResultsFound(false); // Reset no results found
+    } else {
+      const filtered = cars.filter((car) =>
+        car.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredCars(filtered); // Update filtered results
+
+      // Check if no results found and update the state
+      setNoResultsFound(filtered.length === 0);
+    }
   }, [searchQuery, cars]);
 
   // Handle search input change
@@ -122,6 +131,11 @@ const Header = () => {
               ))}
             </ul>
           )}
+          {noResultsFound && searchQuery && (
+            <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 py-2 text-center text-gray-500">
+              No result found
+            </div>
+          )}
         </div>
 
         {/* Mobile Menu Sheet */}
@@ -174,6 +188,11 @@ const Header = () => {
               </li>
             ))}
           </ul>
+        )}
+        {noResultsFound && searchQuery && (
+          <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 py-2 text-center text-gray-500">
+            No result found
+          </div>
         )}
       </div>
 

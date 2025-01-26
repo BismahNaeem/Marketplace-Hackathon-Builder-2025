@@ -14,7 +14,7 @@ interface Car {
   fuelCapacity: number;
   transmission: string;
   seatingCapacity: number;
-  originalPrice: number;
+  pricePerDay :number,
   imageUrl: string;
   reviews?: { name: string; review: string }[];
 }
@@ -22,20 +22,40 @@ interface Car {
 const CarDetail = ({ params }: { params: { slug: string } }) => {
   const [cars, setCars] = useState<Car[]>([]);
   const [carDetails, setCarDetails] = useState<Car | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getCars = async () => {
-      const fetchedCars: Car[] = await fetchCars();
-      setCars(fetchedCars);
+      setLoading(true);
+      setError(null);
+      try {
+        const fetchedCars: Car[] = await fetchCars();
+        setCars(fetchedCars);
 
-      const carDetails = fetchedCars.find((car) => car.slug.current === params.slug);
-      if (carDetails) {
-        setCarDetails(carDetails);
+        const carDetails = fetchedCars.find((car) => car.slug.current === params.slug);
+        if (carDetails) {
+          setCarDetails(carDetails);
+        } else {
+          setError("Car not found");
+        }
+      } catch (err) {
+        setError("Failed to fetch cars");
+      } finally {
+        setLoading(false);
       }
     };
 
     getCars();
   }, [params.slug]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   if (!carDetails) {
     return <div>Car not found</div>;
@@ -47,9 +67,11 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
       <aside className="hidden md:block w-1/5 bg-gray-100 p-6 shadow-lg h-screen">
         <h2 className="text-lg font-bold mb-4">Dashboard</h2>
         <ul className="space-y-4">
-        <Link href='/'><li className="flex items-center gap-2">
-           <FaHome /> Home
-          </li></Link>
+          <Link href='/'>
+            <li className="flex items-center gap-2">
+              <FaHome /> Home
+            </li>
+          </Link>
           <li className="flex items-center gap-2">
             <FaInfoCircle /> About
           </li>
@@ -107,19 +129,16 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
               <p><strong>Transmission:</strong> {carDetails.transmission}</p>
               <p><strong>Seats:</strong> {carDetails.seatingCapacity}</p>
              
-             <p><strong>Price:</strong> ${carDetails.price}</p>
+             <p><strong>Price:</strong> ${carDetails.pricePerDay}</p>
              <div className="flex ">
-              <p className="line-through text-gray-400 " ><strong>Original Price:</strong> ${carDetails.originalPrice}
-             <Link href='/payment'> <button className="lg:ml-[12rem] ml-32 bg-blue-600 h-12 w-24 rounded-md text-white font-bold">Rent Now</button></Link>
-              </p>
+              <Link href='/payment'> <button className="lg:ml-[12rem] ml-32 bg-blue-600 h-12 w-24 rounded-md text-white font-bold">Rent Now</button></Link>
               </div>
             </div>
-           
           </div>
         </div>
 
         {/* 3 Small Divs Below the Left Div (Horizontally Aligned and Smaller in Size) */}
-        <div className="mt-6 flex flex-row sm:flex-row  gap-4">
+        <div className="mt-6 flex flex-row sm:flex-row gap-4">
           {[...Array(3)].map((_, index) => (
             <div
               key={index}
@@ -150,7 +169,8 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
               .filter((car) => car.slug.current !== params.slug)
               .map((car) => (
                 <Link key={car.slug.current} href={`/car/${car.slug.current}`}>
-                  <div className="bg-gray-100 border rounded-lg hover:shadow-lg transition p-4">
+                  <div className="bg-white border rounded-lg hover:shadow-lg transition p-4">
+                    <h3 className="text-lg font-bold text-left">{car.name}</h3>
                     <Image
                       src={car.imageUrl}
                       alt={car.name}
@@ -158,8 +178,6 @@ const CarDetail = ({ params }: { params: { slug: string } }) => {
                       height={200}
                       className="rounded-lg object-cover mb-2"
                     />
-                    <h3 className="text-lg font-bold">{car.name}</h3>
-                   
                   </div>
                 </Link>
               ))}
