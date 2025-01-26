@@ -45,7 +45,7 @@ Follow these steps to run the project locally:
 
 ## Documentation
 
-### [Day 1: Project Introduction](documentation/day%201%20doc/)
+### [Day 1: Project Introduction](documentation/Day-1-doc/)
 - Overview of the project and its goals.
 - Discussion on the target audience and user needs.
 - Tech stack: *Next.js, Sanity CMS, Tailwind CSS*.
