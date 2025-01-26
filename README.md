@@ -50,30 +50,30 @@ Follow these steps to run the project locally:
 - Discussion on the target audience and user needs.
 - Tech stack: *Next.js, Sanity CMS, Tailwind CSS*.
 
-### [Day 2: Tech Used](./documentation/Day-2-doc)
+### [Day 2: Tech Used](Documentation/Day-2-doc/)
 - Tech stack: *Next.js, Sanity CMS, Tailwind CSS*.
 - Created the initial Next.js project and added necessary dependencies.
 - Configured Tailwind CSS for styling.
 
- ### [Day 3: Api Integration](./documentation/Day-3-doc)
+ ### [Day 3: Api Integration](Documentation/Day-3-doc/)
  On Day 3, I set up the project and integrated an external API. The steps include:
 1. Using an external API to fetch data.
 2. Injecting the fetched data into *Sanity CMS* for dynamic content management.
 3. Patching the data from *Sanity CMS* to the frontend to dynamically render content on the website.
 
- ### [Day 4: Dynamic Routing and Functionalities](./documentation/Day-4-doc)
+ ### [Day 4: Dynamic Routing and Functionalities](Documentation/Day-4-doc/)
  On Day 4, I focused on enhancing the website's interactivity by implementing dynamic routing and adding key functionalities:
 1. *Dynamic Routing:* Set up dynamic routes to display individual car details, allowing users to view specific car pages.
 2. *Add to Wishlist Functionality:* Implemented the ability for users to add cars to their wishlist for easy reference later.
 3. *Search Functionality:* Integrated a dynamic search bar in the header to allow users to search for cars by various criteria.
    
 
-### [Day 5: Testing & Error Handling](./documentation/Day-5-doc)
+### [Day 5: Testing & Error Handling](Documentation/Day-5-doc/)
 - Tested the website on different devices and browsers to ensure responsiveness.
 - Created a CSV test report and documented errors.
 - Added error handling for edge cases.
 
-- ### [Day 6: Deployment and Environment Setup](./documentation/Day-6-doc)
+- ### [Day 6: Deployment and Environment Setup](Documentation/Day-6-doc/)
 On Day 6, we focused on preparing the project for production by:
 1. Deploying the website to a live server.
 2. Setting up environment variables to manage sensitive data securely.
